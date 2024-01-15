@@ -6,6 +6,8 @@ import Billboard from "@/components/Billboard";
 import useMoviesList from "@/hooks/useMoviesList";
 import MovieList from "@/components/MovieList";
 import useFavorites from "@/hooks/useFavorites";
+import InfoModal from "@/components/InfoModal";
+import useInfoModal from "@/hooks/useInfoModel";
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -26,11 +28,13 @@ export async function getServerSideProps(context: NextPageContext) {
 
 
 export default function Home() {
-  const { data: user } = useCurrentUser();
+  // const { data: user } = useCurrentUser();
   const { data: movies = [] } = useMoviesList();
   const { data: favorites = [] } = useFavorites();
+  const { isOpen, closeModal } = useInfoModal();
   return (
     <>
+      <InfoModal visible={isOpen} onClose={closeModal} />
       <Navbar />
       <Billboard />
       <div className="pb-40">
